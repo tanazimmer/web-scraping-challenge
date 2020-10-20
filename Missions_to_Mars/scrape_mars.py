@@ -4,21 +4,24 @@ from bs4 import BeautifulSoup as bs
 import time
 import pandas as pd
 from selenium import webdriver
+import requests as req
 
-#chrome driver
-executable_path = {'executable_path': 'chromedriver.exe'}
-browser = Browser('chrome', **executable_path, headless=False)
+def init_browser():
+    executable_path = {'executable_path': 'chromedriver.exe'}
+    browser = Browser('chrome', **executable_path, headless=False)
 
-#def scrape
-def scrape():
+def scrape_info():
     browser = init_browser()
-    mars_data = {}
 
 
 #MARS NEWS
     url = 'https://mars.nasa.gov/news/'
 
     browser.visit(url)
+
+    #pause
+    time.sleep(1)
+    
     html = browser.html
     soup = bs(html, 'html.parser')
 
@@ -38,6 +41,9 @@ def scrape():
     image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
 
     browser.visit(image_url)
+    #pause
+    time.sleep(1)
+
     html = browser.html
     image_soup = bs(html, 'html.parser')
 
@@ -161,4 +167,5 @@ def scrape():
     #quit browser
     browser.quit()
 
+    #return results
     return mars_data
